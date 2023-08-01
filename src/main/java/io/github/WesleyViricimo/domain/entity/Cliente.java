@@ -1,8 +1,17 @@
 package io.github.WesleyViricimo.domain.entity;
 
+import javax.persistence.*;
+
+@Entity//Indica para a aplicação que a classe é uma entidade JPA
+@Table(name = "T_CLIENTE")
 public class Cliente {
 
+    @Id //Define qual é a PK ou identificador da entidade e é obrigatória
+    @GeneratedValue(strategy = GenerationType.AUTO) //Indica que o campo será gerado automáticamente de forma incremental
+    @Column(name = "ID")//Realiza configurações na coluna, altera tamanho, define um nome, define se é uma unique..
     private Integer id;
+
+    @Column(name = "NOME", length = 100)
     String nome;
 
     public Cliente() {

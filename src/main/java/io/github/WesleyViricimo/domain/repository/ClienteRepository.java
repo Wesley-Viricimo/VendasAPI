@@ -15,6 +15,8 @@ public class ClienteRepository {
 
     private static String INSERT = "INSERT INTO T_CLIENTE (NOME) VALUES (?) ";
     private static String SELECIONAR_TODOS = "SELECT * FROM T_CLIENTE";
+    private static String UPDATE = "UPDATE T_CLIENTE SET NOME = ? WHERE ID = ?";
+    private static String DELETE = "DELETE FROM T_CLIENTE WHERE ID = ?";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -25,14 +27,35 @@ public class ClienteRepository {
         return cliente;
     }
 
+    public Cliente atualizar(Cliente cliente) {
+        jdbcTemplate.update(UPDATE, new Object[]{ cliente.getNome(), cliente.getId() });
+        return cliente;
+    }
+
+    public void deletar(Cliente cliente) {
+       deletar(cliente.getId());
+    }
+
+    public void deletar(Integer id) {
+        jdbcTemplate.update(DELETE, new Object[]{ id });
+    }
+
+    public List<Cliente> buscarPorNome(String nome) {
+        return jdbcTemplate.query(SELECIONAR_TODOS.concat(" WHERE NOME LIKE ? ") , new Object[]{"%" + nome + "%"} , getMapper());
+    }
+
     public List<Cliente> listarClientes() {
-        return jdbcTemplate.query(SELECIONAR_TODOS, new RowMapper<Cliente>() {
+        return jdbcTemplate.query(SELECIONAR_TODOS, getMapper());
+    }
+
+    private static RowMapper<Cliente> getMapper() {
+        return new RowMapper<Cliente>() {
             @Override
             public Cliente mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Integer id = rs.getInt("ID");
                 String nome = rs.getString("NOME");
                 return new Cliente(id, nome);
             }
-        });
+        };
     }
 }

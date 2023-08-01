@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,7 +15,6 @@ import java.util.List;
 @Repository //Anotação repository faz com que aplicação entenda que a classe deseja realizar operações na base de dados
 public class ClienteRepository {
 
-    private static String INSERT = "INSERT INTO T_CLIENTE (NOME) VALUES (?) ";
     private static String SELECIONAR_TODOS = "SELECT * FROM T_CLIENTE";
     private static String UPDATE = "UPDATE T_CLIENTE SET NOME = ? WHERE ID = ?";
     private static String DELETE = "DELETE FROM T_CLIENTE WHERE ID = ?";
@@ -21,9 +22,12 @@ public class ClienteRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private EntityManager entityManager;
+
+    @Transactional//Como entityManager precisa de uma transação para realizar as trnasações, utilizamos esta anotação para conseguir gerar uma transação na base de dados
     public Cliente salvarCliente(Cliente cliente) {
-        //Método update serve para fazer operações de inserção, atualização e deleção de registros
-        jdbcTemplate.update(INSERT, new Object[]{cliente.getNome()});
+        entityManager.persist(cliente);
         return cliente;
     }
 

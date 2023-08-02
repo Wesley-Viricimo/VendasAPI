@@ -3,6 +3,7 @@ package io.github.WesleyViricimo.domain.entity;
 import javax.persistence.*;
 
 @Entity//Indica para a aplicação que a classe é uma entidade JPA
+@Table(name = "T_CLIENTE")
 public class Cliente {
 
     @Id //Define qual é a PK ou identificador da entidade e é obrigatória

@@ -17,30 +17,30 @@ public class Main {
     public CommandLineRunner init(@Autowired ClienteRepository clientes) {
         return args -> {
             System.out.println("Salvando clientes");
-            clientes.salvarCliente(new Cliente("Wesley"));
-            clientes.salvarCliente(new Cliente("Jessica"));
-            clientes.salvarCliente(new Cliente("Ana Julia"));
+            clientes.save(new Cliente("Wesley"));
+            clientes.save(new Cliente("Jessica"));
+            clientes.save(new Cliente("Ana Julia"));
 
-            List<Cliente> todosClientes = clientes.listarClientes();
+            List<Cliente> todosClientes = clientes.findAll();
             todosClientes.forEach(System.out::println);
 
             System.out.println("Atualizando clientes");
             todosClientes.forEach(c -> { //Para cada elemento da lista
                 c.setNome(c.getNome() + " atualizado!");
-                clientes.atualizar(c);
+                clientes.save(c);
                 System.out.println(c);
             });
 
             System.out.println("Buscando clientes por nome");
-            clientes.buscarPorNome("Wes").forEach(System.out::println);
+            clientes.findByNomeLike("Wes").forEach(System.out::println);
 
 
             System.out.println("Deletando clientes");
-            clientes.listarClientes().forEach(c -> {
-                clientes.deletar(c);
+            clientes.findAll().forEach(c -> {
+                clientes.delete(c);
             });
 
-            todosClientes = clientes.listarClientes();
+            todosClientes = clientes.findAll();
 
             if(todosClientes.isEmpty()){
                 System.out.println("Nenhum cliente encontrado!");

@@ -48,7 +48,6 @@ public class Main {
                 todosClientes.forEach(System.out::println);
             }
 
-
         };
     }
 

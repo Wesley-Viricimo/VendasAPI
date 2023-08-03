@@ -2,6 +2,7 @@ package io.github.WesleyViricimo.domain.entity;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "T_ITENS_PEDIDO")
 public class ItensPedido {

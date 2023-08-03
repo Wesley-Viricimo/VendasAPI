@@ -9,13 +9,13 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "ID")
     private Integer id;
 
-    @Column(name = "descricao")
+    @Column(name = "DESCRICAO")
     private String descricao;
 
-    @Column(name = "valor_produto")
+    @Column(name = "VALOR_PRODUTO", length = 20, precision = 2)
     private BigDecimal valorProduto;
 
     public Integer getId() {

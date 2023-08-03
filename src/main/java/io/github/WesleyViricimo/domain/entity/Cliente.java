@@ -1,6 +1,7 @@
 package io.github.WesleyViricimo.domain.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity//Indica para a aplicação que a classe é uma entidade JPA
 @Table(name = "T_CLIENTE")
@@ -13,6 +14,9 @@ public class Cliente {
 
     @Column(name = "NOME", length = 100)
     String nome;
+
+    @OneToMany(mappedBy = "cliente") //Anotação de um para muitos, neste caso um cliente poderá ter muitos pedidos
+    private Set<Pedido> pedidos;//Propriedade que irá retornar os pedidos de cada cliente
 
     public Cliente() {
 
@@ -41,6 +45,14 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     @Override

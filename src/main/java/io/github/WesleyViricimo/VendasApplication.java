@@ -12,11 +12,10 @@ import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 
 @SpringBootApplication //Anotação para Spring reconhecer que a classe irá inicializar uma aplicação Spring Boot
-public class Main {
+public class VendasApplication {
     @Bean
     public CommandLineRunner init(@Autowired ClienteRepository clientes,
                                   @Autowired PedidoRepository pedidos) {
@@ -39,6 +38,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(VendasApplication.class, args);
     }
 }

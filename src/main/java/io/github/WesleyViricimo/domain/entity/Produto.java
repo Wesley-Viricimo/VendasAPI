@@ -15,7 +15,7 @@ public class Produto {
     @Column(name = "DESCRICAO")
     private String descricao;
 
-    @Column(name = "VALOR_PRODUTO", length = 20, precision = 2)
+    @Column(name = "VALOR_PRODUTO", precision = 20, scale = 2)
     private BigDecimal valorProduto;
 
     public Integer getId() {

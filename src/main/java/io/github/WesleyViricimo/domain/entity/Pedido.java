@@ -21,7 +21,7 @@ public class Pedido {
     @Column(name = "DATA_PEDIDO")
     private LocalDate dataPedido;
 
-    @Column(name = "VALOR_PEDIDO", length = 20, precision = 2)//Coluna terá o tamanho de 20 caracteres com 2 casas decimais
+    @Column(name = "VALOR_PEDIDO", precision = 20, scale = 2)//Coluna terá o tamanho de 20 caracteres com 2 casas decimais
     private BigDecimal valorPedido;
 
     @OneToMany(mappedBy = "pedido")//Relacionamento de um para muitos, neste caso um pedido poderá ter muitos itens do pedido (mapped by deverá ser passado o atributo que representa este relacionamento)

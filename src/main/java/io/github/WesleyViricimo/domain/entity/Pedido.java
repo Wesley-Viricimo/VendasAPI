@@ -66,4 +66,13 @@ public class Pedido {
     public void setItensPedidos(Set<ItensPedido> itensPedidos) {
         this.itensPedidos = itensPedidos;
     }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", dataPedido=" + dataPedido +
+                ", valorPedido=" + valorPedido +
+                '}';
+    }
 }

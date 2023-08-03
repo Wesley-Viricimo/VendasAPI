@@ -13,10 +13,13 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> { //P
     @Query(value = " select * from t_cliente c where c.nome like '%:nome%' ", nativeQuery = true)//Utilizando @Query para realizar consultas com sql nativo, no value adicionar a consulta e no nativeQuery setar o valor true
     List<Cliente> encontrarPorNome(@Param("nome") String nome); //Deverá ser adicionada a anotação param caso for recebido algum parâmetro
 
-    @Query(value = " delete from t_cliente where nome = ':nome' ", nativeQuery = true)
+    @Query(" delete from Cliente where nome = :nome ")//jpql
     @Modifying //Precisa adicionar anotação modifying para utilizar a anotação @Query para métodos de crud
     void deleteByNome(String nome);
 
     boolean existsByNome(String nome);//QueryMethod para retornar se existe um cliente com o nome que foi recebido como parâmetro
+
+    @Query(" select c from Cliente c left join fetch c.pedidos p where c.id = :id ")
+    Cliente findClienteFetchPedidos(@Param("id") Integer id);
 
 }

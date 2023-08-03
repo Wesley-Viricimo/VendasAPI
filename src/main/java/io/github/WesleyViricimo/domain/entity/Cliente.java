@@ -15,7 +15,7 @@ public class Cliente {
     @Column(name = "NOME", length = 100)
     String nome;
 
-    @OneToMany(mappedBy = "cliente") //Anotação de um para muitos, neste caso um cliente poderá ter muitos pedidos
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY) //Anotação de um para muitos, neste caso um cliente poderá ter muitos pedidos (fetchType.Lazy significa que os pedidos feitos não serão trazidos automáticamente a não ser que seja realizado um fetch)
     private Set<Pedido> pedidos;//Propriedade que irá retornar os pedidos de cada cliente
 
     public Cliente() {

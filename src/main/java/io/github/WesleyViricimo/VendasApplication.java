@@ -30,9 +30,12 @@ public class VendasApplication {
             p.setValorPedido(BigDecimal.valueOf(35.32));
             pedidos.save(p);
 
-            Cliente cliente = clientes.findClienteFetchPedidos(wesley.getId());
+            /*Cliente cliente = clientes.findClienteFetchPedidos(wesley.getId());
             System.out.println(cliente);
             System.out.println(cliente.getPedidos());
+             */
+
+            pedidos.findByCliente(wesley).forEach(System.out::println);
 
         };
     }

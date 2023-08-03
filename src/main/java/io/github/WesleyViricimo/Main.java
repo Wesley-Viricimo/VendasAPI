@@ -32,8 +32,10 @@ public class Main {
             });
 
             System.out.println("Buscando clientes por nome");
-            clientes.findByNomeLike("Wes").forEach(System.out::println);
+            clientes.findByNomeLike("Wesley").forEach(System.out::println);
 
+            boolean existe = clientes.existsByNome("Wesley atualizado!");
+            System.out.println("Existe por nome " + existe);
 
             System.out.println("Deletando clientes");
             clientes.findAll().forEach(c -> {

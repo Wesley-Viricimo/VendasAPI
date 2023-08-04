@@ -33,4 +33,15 @@ public class ClienteController {
         Cliente clienteSalvo = repository.save(cliente);
         return ResponseEntity.ok(clienteSalvo);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity delete(@PathVariable Integer id) {
+        Optional<Cliente> cliente = repository.findById(id);
+
+        if(cliente.isPresent()) {
+            repository.delete(cliente.get());
+            return ResponseEntity.noContent().build(); //Se encontrou o cliente irá deletá-lo e retornar uma mensagem de sucesso
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

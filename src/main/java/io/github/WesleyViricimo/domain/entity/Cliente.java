@@ -1,5 +1,7 @@
 package io.github.WesleyViricimo.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ public class Cliente {
     @Column(name = "NOME", length = 100)
     String nome;
 
+    @JsonIgnore //Anotação para não retornar essa informação no JSON
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY) //Anotação de um para muitos, neste caso um cliente poderá ter muitos pedidos (fetchType.Lazy significa que os pedidos feitos não serão trazidos automáticamente a não ser que seja realizado um fetch)
     private Set<Pedido> pedidos;//Propriedade que irá retornar os pedidos de cada cliente
 

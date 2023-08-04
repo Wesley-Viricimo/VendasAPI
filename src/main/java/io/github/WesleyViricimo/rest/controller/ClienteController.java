@@ -26,4 +26,11 @@ public class ClienteController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @PostMapping
+    @ResponseBody
+    public ResponseEntity save(@RequestBody Cliente cliente) { //RequestBody indica que o cliente deverá ser recebido no corpo da requisição
+        Cliente clienteSalvo = repository.save(cliente);
+        return ResponseEntity.ok(clienteSalvo);
+    }
 }

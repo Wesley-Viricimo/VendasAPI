@@ -33,4 +33,16 @@ public class ProdutoController {
     public List<Produto> getProdutos() {
         return repository.findAll();
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable Integer id, @RequestBody Produto produto) {
+        repository.findById(id)
+                .map( produtoExistente -> {
+                    produto.setId(produtoExistente.getId());
+                    repository.save(produto);
+                    return produtoExistente;
+                }).orElseThrow( () ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado!"));
+    }
 }

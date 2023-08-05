@@ -3,6 +3,8 @@ package io.github.WesleyViricimo.rest.controller;
 import io.github.WesleyViricimo.domain.entity.Produto;
 import io.github.WesleyViricimo.domain.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -55,5 +57,17 @@ public class ProdutoController {
                     return produtoExistente;
                 }).orElseThrow( () ->
                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado!"));
+    }
+
+
+    @GetMapping("/filtrar")
+    public List<Produto> getFiltroProdutos(Produto filtro) {
+        ExampleMatcher exampleMatcher = ExampleMatcher
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example example = Example.of(filtro, exampleMatcher);
+        return repository.findAll(example);
     }
 }

@@ -66,4 +66,5 @@ public class ClienteController {
 
         return repository.findAll(example);
     }
+
 }

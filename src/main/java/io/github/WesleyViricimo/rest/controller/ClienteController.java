@@ -35,9 +35,9 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         repository.findById(id)
-                .map( cliente -> {
-                    repository.delete(cliente);
-                    return cliente;
+                .map( clienteExistente -> {
+                    repository.delete(clienteExistente);
+                    return clienteExistente;
                 })
                 .orElseThrow( () ->
                     new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));

@@ -38,11 +38,22 @@ public class ProdutoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Produto produto) {
         repository.findById(id)
-                .map( produtoExistente -> {
-                    produto.setId(produtoExistente.getId());
+                .map( produtoExistente -> { //Se encontrar o produto o mesmo será mapeado
+                    produto.setId(produtoExistente.getId()); //Irá ser setado na atualização o mesmo id que o produto já possui mantendo assim o mesmo id
                     repository.save(produto);
                     return produtoExistente;
                 }).orElseThrow( () ->
                     new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado!"));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Integer id) {
+         repository.findById(id)
+                .map(produtoExistente -> {
+                    repository.delete(produtoExistente);
+                    return produtoExistente;
+                }).orElseThrow( () ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não encontrado!"));
     }
 }

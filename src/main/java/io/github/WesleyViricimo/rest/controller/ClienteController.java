@@ -5,14 +5,13 @@ import io.github.WesleyViricimo.domain.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
-@Controller //Definindo que a classe será uma classe de controle de requisições rest
+@RestController //Definindo que a classe será uma classe de controle de requisições rest
 @RequestMapping("/api/clientes")//Quando o usuário acessar este endpoint irá acessar os métodos desta classe
 public class ClienteController {
 
@@ -20,55 +19,51 @@ public class ClienteController {
     private ClienteRepository repository;
 
     @GetMapping(value = "/{id}")
-    @ResponseBody
-    public ResponseEntity getClienteById(@PathVariable Integer id){
-        Optional<Cliente> cliente = repository.findById(id);
-
-        if(cliente.isPresent()) {
-            return ResponseEntity.ok(cliente.get());
-        }
-        return ResponseEntity.notFound().build();
+    public Cliente getClienteById(@PathVariable Integer id){
+        return repository.findById(id).orElseThrow( () -> {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!");
+        });
     }
 
     @PostMapping
-    @ResponseBody
-    public ResponseEntity save(@RequestBody Cliente cliente) { //RequestBody indica que o cliente deverá ser recebido no corpo da requisição
-        Cliente clienteSalvo = repository.save(cliente);
-        return ResponseEntity.ok(clienteSalvo);
+    @ResponseStatus(HttpStatus.CREATED)//Quando o cliente for criado irá retornar o status 201 created
+    public Cliente save(@RequestBody Cliente cliente) { //RequestBody indica que o cliente deverá ser recebido no corpo da requisição
+        return repository.save(cliente);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity delete(@PathVariable Integer id) {
-        Optional<Cliente> cliente = repository.findById(id);
-
-        if(cliente.isPresent()) {
-            repository.delete(cliente.get());
-            return ResponseEntity.ok().build(); //Se encontrou o cliente irá deletá-lo e retornar uma mensagem de sucesso
-        }
-        return ResponseEntity.notFound().build();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Integer id) {
+        repository.findById(id)
+                .map( cliente -> {
+                    repository.delete(cliente);
+                    return cliente;
+                })
+                .orElseThrow( () ->
+                    new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!"));
     }
 
     @PutMapping(value = "/{id}")
-    @ResponseBody
-    public ResponseEntity update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable Integer id, @RequestBody Cliente cliente) {
 
-        return repository.findById(id)
+         repository.findById(id)
                 .map(clienteExistente -> { //Se o optional estiver populado irá entrar no método map
                     cliente.setId(clienteExistente.getId());
                     repository.save(cliente);
-                    return ResponseEntity.ok().build();
-                }).orElseGet( () -> ResponseEntity.notFound().build() ); //Se o optional não estiver populado significa que não encontrou o cliente e retornará not found
+                    return clienteExistente;
+                }).orElseThrow( () ->
+                         new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado!")); //Se o optional não estiver populado significa que não encontrou o cliente e retornará not found
     }
 
     @GetMapping
-    public ResponseEntity find(Cliente filtro) {
+    public List<Cliente> find(Cliente filtro) {
         ExampleMatcher matcher = ExampleMatcher //Objeto que permite que sejam realizadas algumas configurações para que seja encontrado os clientes através das propriedades
                 .matching()
                 .withIgnoreCase()//Configuração para encontrar o cliente independente se estiver com caixa alta ou baixa
                 .withStringMatcher( ExampleMatcher.StringMatcher.CONTAINING ); //Configuração para retornar o cliente a partir da string informada pelo usuário, se for digitado o valor 'al', irá retornar todos os clientes que possuam al em alguma das suas propriedades
         Example example = Example.of(filtro, matcher);
 
-        List<Cliente> listaCliente = repository.findAll(example);
-        return ResponseEntity.ok(listaCliente);
+        return repository.findAll(example);
     }
 }

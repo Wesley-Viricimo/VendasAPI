@@ -15,7 +15,10 @@ public class Cliente {
     private Integer id;
 
     @Column(name = "NOME", length = 100)
-    String nome;
+    private String nome;
+
+    @Column(name = "CPF", length = 11)
+    private String cpf;
 
     @JsonIgnore //Anotação para não retornar essa informação no JSON
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY) //Anotação de um para muitos, neste caso um cliente poderá ter muitos pedidos (fetchType.Lazy significa que os pedidos feitos não serão trazidos automáticamente a não ser que seja realizado um fetch)
@@ -48,6 +51,14 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public Set<Pedido> getPedidos() {

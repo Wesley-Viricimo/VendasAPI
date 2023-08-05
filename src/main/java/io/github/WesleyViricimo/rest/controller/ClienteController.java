@@ -40,8 +40,21 @@ public class ClienteController {
 
         if(cliente.isPresent()) {
             repository.delete(cliente.get());
-            return ResponseEntity.noContent().build(); //Se encontrou o cliente irá deletá-lo e retornar uma mensagem de sucesso
+            return ResponseEntity.ok().build(); //Se encontrou o cliente irá deletá-lo e retornar uma mensagem de sucesso
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    @ResponseBody
+    public ResponseEntity update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+
+        return repository.findById(id)
+                .map(clienteExistente -> { //Se o optional estiver populado irá entrar no método map
+                    cliente.setId(clienteExistente.getId());
+                    repository.save(cliente);
+                    return ResponseEntity.ok().build();
+                }).orElseGet( () -> ResponseEntity.notFound().build() );
+
     }
 }

@@ -1,10 +1,16 @@
 package io.github.WesleyViricimo.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
+@NoArgsConstructor //Cria construtor sem os argumentos
+@AllArgsConstructor //Cria construtor com todos os argumentos
+@Data //Anotação que criará getters e setters automaticamente para as propriedades
 @Entity
 @Table(name = "T_PEDIDO")
 public class Pedido {
@@ -27,52 +33,4 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido")//Relacionamento de um para muitos, neste caso um pedido poderá ter muitos itens do pedido (mapped by deverá ser passado o atributo que representa este relacionamento)
     private Set<ItensPedido> itensPedidos;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public LocalDate getDataPedido() {
-        return dataPedido;
-    }
-
-    public void setDataPedido(LocalDate dataPedido) {
-        this.dataPedido = dataPedido;
-    }
-
-    public BigDecimal getValorPedido() {
-        return valorPedido;
-    }
-
-    public void setValorPedido(BigDecimal valorPedido) {
-        this.valorPedido = valorPedido;
-    }
-
-    public Set<ItensPedido> getItensPedidos() {
-        return itensPedidos;
-    }
-
-    public void setItensPedidos(Set<ItensPedido> itensPedidos) {
-        this.itensPedidos = itensPedidos;
-    }
-
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", dataPedido=" + dataPedido +
-                ", valorPedido=" + valorPedido +
-                '}';
-    }
 }

@@ -1,8 +1,12 @@
 package io.github.WesleyViricimo.domain.entity;
 
+import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+@NoArgsConstructor //Cria construtor sem os argumentos
+@AllArgsConstructor //Cria construtor com todos os argumentos
+@Data //Anotação que criará getters e setters automaticamente para as propriedades
 @Entity
 @Table(name = "T_PRODUTO")
 public class Produto {
@@ -17,28 +21,4 @@ public class Produto {
 
     @Column(name = "VALOR_PRODUTO", precision = 20, scale = 2)
     private BigDecimal valorProduto;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public BigDecimal getValorProduto() {
-        return valorProduto;
-    }
-
-    public void setValorProduto(BigDecimal valorProduto) {
-        this.valorProduto = valorProduto;
-    }
 }

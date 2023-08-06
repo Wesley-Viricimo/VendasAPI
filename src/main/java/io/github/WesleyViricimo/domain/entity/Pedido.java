@@ -3,10 +3,11 @@ package io.github.WesleyViricimo.domain.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @NoArgsConstructor //Cria construtor sem os argumentos
 @AllArgsConstructor //Cria construtor com todos os argumentos
@@ -31,6 +32,6 @@ public class Pedido {
     private BigDecimal valorPedido;
 
     @OneToMany(mappedBy = "pedido")//Relacionamento de um para muitos, neste caso um pedido poderá ter muitos itens do pedido (mapped by deverá ser passado o atributo que representa este relacionamento)
-    private Set<ItensPedido> itensPedidos;
+    private List<ItensPedido> itensPedidos;
 
 }

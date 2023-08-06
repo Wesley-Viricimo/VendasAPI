@@ -35,27 +35,27 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     @Transactional //Anotação que garantirá que se alguma operação no banco de dados não for realizada com sucesso será feito um rollback
     public Pedido salvar(PedidoDTO dto) {
-        Integer idCliente = dto.getCliente();
-        Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(() ->
-                new RegraNegocioException("Código de cliente inválido!"));
-        Pedido pedido = new Pedido();
+        Integer idCliente = dto.getCliente(); //Como o pedido precisa ter um cliente, será recuperado o id do cliente que foi enviado no corpo da requisição
+        Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(() -> //Será verificado se o cliente enviado no corpo da requisição existe
+                new RegraNegocioException("Código de cliente inválido!")); //Se não existir será disparada a exceção
+        Pedido pedido = new Pedido(); //Criando novo pedido
         pedido.setValorPedido(dto.getValorPedido());
-        pedido.setDataPedido(LocalDate.now());
+        pedido.setDataPedido(LocalDate.now()); //Setando propriedades para a entidade de pedido
         pedido.setCliente(cliente);
 
-        pedidoRepository.save(pedido);
+        pedidoRepository.save(pedido); //Salvando o pedido, o que fará com que seja gerado o id
 
-        List<ItensPedido> itensPedido = converterItens(pedido, dto.getItens());
+        List<ItensPedido> itensPedido = converterItens(pedido, dto.getItens()); //Buscando a lista de produtos que foram vendidos no pedido
 
-        itensPedidoRepository.saveAll(itensPedido);
+        itensPedidoRepository.saveAll(itensPedido); //Salvando os itens do pedido
 
-        pedido.setItensPedidos(itensPedido);
+        pedido.setItensPedidos(itensPedido); //Setando os itens do pedido na entidade de pedido
 
         return pedido;
     }
 
     private List<ItensPedido> converterItens(Pedido pedido, List<ItensPedidoDTO> itensDTO) {
-        if(itensDTO.isEmpty()) {
+        if(itensDTO.isEmpty()) { //Se a lista estiver vazia será disparada uma exceção
             throw new RegraNegocioException("Não é possível realizar pedido sem itens!");
         }
 

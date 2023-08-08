@@ -4,6 +4,7 @@ import io.github.WesleyViricimo.domain.entity.Cliente;
 import io.github.WesleyViricimo.domain.entity.ItensPedido;
 import io.github.WesleyViricimo.domain.entity.Pedido;
 import io.github.WesleyViricimo.domain.entity.Produto;
+import io.github.WesleyViricimo.domain.enums.StatusPedido;
 import io.github.WesleyViricimo.domain.repository.ClienteRepository;
 import io.github.WesleyViricimo.domain.repository.ItensPedidoRepository;
 import io.github.WesleyViricimo.domain.repository.PedidoRepository;
@@ -43,6 +44,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setValorPedido(dto.getValorPedido());
         pedido.setDataPedido(LocalDate.now()); //Setando propriedades para a entidade de pedido
         pedido.setCliente(cliente);
+        pedido.setStatus(StatusPedido.REALIZADO);
 
         pedidoRepository.save(pedido); //Salvando o pedido, o que fará com que seja gerado o id
 

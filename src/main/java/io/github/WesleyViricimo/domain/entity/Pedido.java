@@ -1,5 +1,6 @@
 package io.github.WesleyViricimo.domain.entity;
 
+import io.github.WesleyViricimo.domain.enums.StatusPedido;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,10 @@ public class Pedido {
 
     @Column(name = "VALOR_PEDIDO", precision = 20, scale = 2)//Coluna terá o tamanho de 20 caracteres com 2 casas decimais
     private BigDecimal valorPedido;
+
+    @Enumerated(EnumType.STRING) //Como tipo enumerador não existe no banco de dados, setando que o campo será uma string
+    @Column(name = "STATUS", length = 20)
+    private StatusPedido status;
 
     @OneToMany(mappedBy = "pedido")//Relacionamento de um para muitos, neste caso um pedido poderá ter muitos itens do pedido (mapped by deverá ser passado o atributo que representa este relacionamento)
     private List<ItensPedido> itensPedidos;

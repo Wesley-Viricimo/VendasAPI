@@ -18,5 +18,6 @@ public class InformacoesPedidoDTO {
     private String nomeCliente;
     private BigDecimal valorPedido;
     private String dataPedido;
+    private String status;
     private List<InformacoesItensPedidoDTO> itens;
 }

@@ -50,6 +50,7 @@ public class PedidoController {
                 .cpf(pedido.getCliente().getCpf())
                 .nomeCliente(pedido.getCliente().getNome())
                 .valorPedido(pedido.getValorPedido())
+                .status(pedido.getStatus().name()) //.name irá pegar o enumerador e transformar em string
                 .itens(converterItensPedido(pedido.getItensPedidos()))
                 .build();
     }

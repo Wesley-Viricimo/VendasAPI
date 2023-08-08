@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController //Definindo que a classe será uma classe de controle de requisições rest
@@ -27,7 +28,7 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)//Quando o cliente for criado irá retornar o status 201 created
-    public Cliente save(@RequestBody Cliente cliente) { //RequestBody indica que o cliente deverá ser recebido no corpo da requisição
+    public Cliente save(@RequestBody @Valid Cliente cliente) { //RequestBody indica que o cliente deverá ser recebido no corpo da requisição
         return repository.save(cliente);
     }
 

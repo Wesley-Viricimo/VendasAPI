@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @NoArgsConstructor //Cria construtor sem os argumentos
@@ -20,6 +21,7 @@ public class Cliente {
     private Integer id;
 
     @Column(name = "NOME", length = 100)
+    @NotEmpty(message = "Campo nome é obrigatório!")
     private String nome;
 
     @Column(name = "CPF", length = 11)

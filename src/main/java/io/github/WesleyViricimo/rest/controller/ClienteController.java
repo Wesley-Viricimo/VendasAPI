@@ -46,7 +46,7 @@ public class ClienteController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody Cliente cliente) {
+    public void update(@PathVariable Integer id, @RequestBody @Valid Cliente cliente) {
 
          repository.findById(id)
                 .map(clienteExistente -> { //Se o optional estiver populado irá entrar no método map

@@ -13,10 +13,10 @@ import java.util.List;
 @AllArgsConstructor //Cria construtor com todos os argumentos
 @Data //Anotação que criará getters e setters automaticamente para as propriedades
 public class PedidoDTO {
-    @NotNull(message = "Informe o código do cliente!")
+    @NotNull(message = "{campo.codigo-cliente.obrigatorio}") //Recebendo a string salva no arquivo messages.properties
     private Integer cliente; //irá receber o id do cliente
-    @NotNull(message = "O Campo total do pedido é obrigatório!")
+    @NotNull(message = "{campo.total-pedido.obrigatorio}")
     private BigDecimal valorPedido; //Irá receber o valor total do pedido
-    @NotEmptyList(message = "Pedido não pode ser realizado sem itens!")
+    @NotEmptyList(message = "{campo.items-pedido.obrigatorio}")
     private List<ItensPedidoDTO> itens;
 }

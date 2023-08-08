@@ -1,5 +1,6 @@
 package io.github.WesleyViricimo.rest.dto;
 
+import io.github.WesleyViricimo.validation.NotEmptyList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,5 +17,6 @@ public class PedidoDTO {
     private Integer cliente; //irá receber o id do cliente
     @NotNull(message = "O Campo total do pedido é obrigatório!")
     private BigDecimal valorPedido; //Irá receber o valor total do pedido
+    @NotEmptyList(message = "Pedido não pode ser realizado sem itens!")
     private List<ItensPedidoDTO> itens;
 }

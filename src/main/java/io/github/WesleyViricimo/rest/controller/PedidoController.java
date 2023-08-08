@@ -2,7 +2,9 @@ package io.github.WesleyViricimo.rest.controller;
 
 import io.github.WesleyViricimo.domain.entity.ItensPedido;
 import io.github.WesleyViricimo.domain.entity.Pedido;
+import io.github.WesleyViricimo.domain.enums.StatusPedido;
 import io.github.WesleyViricimo.domain.repository.PedidoRepository;
+import io.github.WesleyViricimo.rest.dto.AtualizacaoStatusPedidoDTO;
 import io.github.WesleyViricimo.rest.dto.InformacoesItensPedidoDTO;
 import io.github.WesleyViricimo.rest.dto.InformacoesPedidoDTO;
 import io.github.WesleyViricimo.rest.dto.PedidoDTO;
@@ -67,6 +69,13 @@ public class PedidoController {
                 .quantidade(item.getQuantidade())
                 .build()
         ).collect(Collectors.toList());
+    }
+
+    @PatchMapping("/{id}") //PutMapping atualiza todos os campos da entidade por completo e caso algum campo não for informado o mesmo receberá o valor nulo, mas com o PatchMapping é possível alterar apenas alguns campos
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatusPedido(@PathVariable Integer id, @RequestBody AtualizacaoStatusPedidoDTO dto) {
+        String novoStatus = dto.getNovoStatus();
+        service.atualizaStatus(id, StatusPedido.valueOf(novoStatus));
     }
 
 }

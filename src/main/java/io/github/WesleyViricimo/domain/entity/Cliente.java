@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
@@ -24,15 +26,13 @@ public class Cliente {
     @NotEmpty(message = "Campo nome é obrigatório!")
     private String nome;
 
-    @Column(name = "CPF", length = 11)
+    @Column(name = "CPF", length = 11, unique = true)
+    @NotEmpty(message = "O campo CPF é obrigatório!")
+    @CPF(message = "Informe um CPF válido!")
     private String cpf;
 
     @JsonIgnore //Anotação para não retornar essa informação no JSON
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY) //Anotação de um para muitos, neste caso um cliente poderá ter muitos pedidos (fetchType.Lazy significa que os pedidos feitos não serão trazidos automáticamente a não ser que seja realizado um fetch)
     private Set<Pedido> pedidos;//Propriedade que irá retornar os pedidos de cada cliente
-
-    public Cliente(Integer id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
+    
 }

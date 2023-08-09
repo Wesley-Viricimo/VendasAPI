@@ -21,11 +21,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication().passwordEncoder(passwordEncoder())//Criando um usuário em memória para testes e adicionando o tipo de encoder que será utilizado
                 .withUser("wesley")//Usuário que será utilizado
                 .password(passwordEncoder().encode("123"))//Senha encodada que será utilizada
-                .roles("USER");//Adicionando a role que o usuário irá possuir
+                .roles("USER");//Adicionando o perfil que o usuário irá possuir
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception { //Método que irá validar a autorização (Se o usuário tem acesso ao endpoint que está fazendo a requisição)
-        super.configure(http);
+        http
+                .csrf().disable()//Desabilitando csrf(configuração que permite a segurança entre uma aplicação web e o backend, mas como não se trata de uma aplicação web e sim uma api rest então não se faz necessário)
+                .authorizeRequests()//Autorizando requisições
+                    .antMatchers("/api/clientes/**") //Para que seja feita requisições neste endpoint
+                        .authenticated() //O usuário deverá estar autenticado
+                .and() //Retorna para o verbo http
+                .formLogin();//Irá retornar a tela de login padrão do spring security
     }
 }

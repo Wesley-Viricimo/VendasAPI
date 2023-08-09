@@ -60,11 +60,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Dependência para a segurança
+        <!-- Dependência para spring security-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>-->
+        </dependency>
 
         <!-- Dependência para testes
         <dependency>

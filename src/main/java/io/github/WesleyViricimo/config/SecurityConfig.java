@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication().passwordEncoder(passwordEncoder())//Criando um usuário em memória para testes e adicionando o tipo de encoder que será utilizado
                 .withUser("wesley")//Usuário que será utilizado
                 .password(passwordEncoder().encode("123"))//Senha encodada que será utilizada
-                .roles("USER");//Adicionando o perfil que o usuário irá possuir
+                .roles("USER", "ADMIN");//Adicionando o perfil que o usuário irá possuir
     }
 
     @Override
@@ -36,6 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/pedidos/**")
                         .hasAnyRole("USER", "ADMIN")
                 .and() //Retorna para o verbo http
-                .formLogin();//Irá retornar a tela de login padrão do spring security
+                    .httpBasic(); //Alterando de form login para http basic (Neste tipo de autorização é necessário é necessário informar um usuário e senha que por sua vez serão encodados em base 64)
     }
 }

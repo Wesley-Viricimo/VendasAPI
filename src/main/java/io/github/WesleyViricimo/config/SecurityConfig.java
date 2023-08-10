@@ -30,7 +30,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()//Desabilitando csrf(configuração que permite a segurança entre uma aplicação web e o backend, mas como não se trata de uma aplicação web e sim uma api rest então não se faz necessário)
                 .authorizeRequests()//Autorizando requisições
                     .antMatchers("/api/clientes/**") //Para que seja feita requisições neste endpoint
-                        .authenticated() //O usuário deverá estar autenticado
+                        .hasAnyRole("USER", "ADMIN")//Se o usuário possuir o perfil user ou admin poderá acessar o endpoint de clientes
+                    .antMatchers("/api/produtos/**")
+                        .hasRole("ADMIN")//Para o crud de produtos o usuário deverá possuir o perfil de admin
+                    .antMatchers("/api/pedidos/**")
+                        .hasAnyRole("USER", "ADMIN")
                 .and() //Retorna para o verbo http
                 .formLogin();//Irá retornar a tela de login padrão do spring security
     }

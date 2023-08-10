@@ -3,6 +3,7 @@ package io.github.WesleyViricimo.config;
 import io.github.WesleyViricimo.service.impl.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,6 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .hasRole("ADMIN")//Para o crud de produtos o usuário deverá possuir o perfil de admin
                     .antMatchers("/api/pedidos/**")
                         .hasAnyRole("USER", "ADMIN")
+                    .antMatchers(HttpMethod.POST,"/api/usuarios/**")//Para a criação de novos usuários, qualquer pessoa poderá acessar o endpoint
+                        .permitAll()
+                        .anyRequest().authenticated() //Para todos os outros endpoints não mapeados acima, será necessário estar autenticado para acessar
                 .and() //Retorna para o verbo http
                     .httpBasic(); //Alterando de form login para http basic (Neste tipo de autorização é necessário é necessário informar um usuário e senha que por sua vez serão encodados em base 64)
     }

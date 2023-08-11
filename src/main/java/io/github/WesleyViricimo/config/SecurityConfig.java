@@ -40,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/api/pedidos/**")
                         .hasAnyRole("USER", "ADMIN")
                     .antMatchers(HttpMethod.POST,"/api/usuarios/**")//Para a criação de novos usuários, qualquer pessoa poderá acessar o endpoint
-                        .permitAll()
+                        .permitAll() 
                         .anyRequest().authenticated() //Para todos os outros endpoints não mapeados acima, será necessário estar autenticado para acessar
                 .and() //Retorna para o verbo http
                     .httpBasic(); //Alterando de form login para http basic (Neste tipo de autorização é necessário é necessário informar um usuário e senha que por sua vez serão encodados em base 64)

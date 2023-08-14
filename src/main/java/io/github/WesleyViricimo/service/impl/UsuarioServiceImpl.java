@@ -2,6 +2,7 @@ package io.github.WesleyViricimo.service.impl;
 
 import io.github.WesleyViricimo.domain.entity.Usuario;
 import io.github.WesleyViricimo.domain.repository.UsuarioRepository;
+import io.github.WesleyViricimo.exception.SenhaInvalidaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,15 @@ public class UsuarioServiceImpl implements UserDetailsService { //Classe será r
     @Transactional
     public Usuario salvar(Usuario usuario){
         return repository.save(usuario);
+    }
+
+    public UserDetails autenticar(Usuario usuario) {
+       UserDetails user = loadUserByUsername(usuario.getLogin());//Carregando informações do usuario através do nome de usuario
+       boolean senhaCorreta = encoder.matches(usuario.getSenha(), user.getPassword()); //Compara senha que o usuario digitou com a senha que está salva no banco de dados (primeiro parâmetro SEMPRE deve ser a senha digitada)
+       if(senhaCorreta) {
+           return user;
+       }
+       throw new SenhaInvalidaException();
     }
 
     @Override

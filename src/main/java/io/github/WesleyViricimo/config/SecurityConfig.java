@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                         .anyRequest().authenticated() //Para todos os outros endpoints não mapeados acima, será necessário estar autenticado para acessar
                 .and() //Retorna para o verbo http
-                    .sessionManagement()
+                    .sessionManagement()//Desabilitando política de criação de seção
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);//Adicionando usuario do token dentro do contexto do spring security

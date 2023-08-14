@@ -1,6 +1,8 @@
 package io.github.WesleyViricimo;
 
 import io.github.WesleyViricimo.domain.entity.Usuario;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,4 +33,13 @@ public class JwtService {
                 .signWith(SignatureAlgorithm.HS512, chaveAssinatura) //Identificando o tipo de codificação e a chave de assinatura
                 .compact();
     }
+
+    public Claims obterClaims(String token) throws ExpiredJwtException { //Caso token estiver expirado, será disparada uma exception
+        return Jwts
+                .parser()
+                .setSigningKey(chaveAssinatura)//Indicando qual foi a chave utilizada para gerar o token
+                .parseClaimsJws(token)//Setando token que deverá ser realizada a codificação
+                .getBody();//Irá retornar os claims do token
+    }
+    
 }

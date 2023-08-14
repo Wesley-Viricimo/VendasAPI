@@ -1,5 +1,6 @@
-package io.github.WesleyViricimo;
+package io.github.WesleyViricimo.security.jwt;
 
+import io.github.WesleyViricimo.VendasApplication;
 import io.github.WesleyViricimo.domain.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

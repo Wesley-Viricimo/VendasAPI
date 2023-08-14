@@ -34,12 +34,23 @@ public class JwtService {
                 .compact();
     }
 
-    public Claims obterClaims(String token) throws ExpiredJwtException { //Caso token estiver expirado, será disparada uma exception
+    private Claims obterClaims(String token) throws ExpiredJwtException { //Caso token estiver expirado, será disparada uma exception
         return Jwts
                 .parser()
                 .setSigningKey(chaveAssinatura)//Indicando qual foi a chave utilizada para gerar o token
                 .parseClaimsJws(token)//Setando token que deverá ser realizada a codificação
                 .getBody();//Irá retornar os claims do token
     }
-    
+
+    public boolean tokenValido(String token) {
+        try {
+            Claims claims = obterClaims(token); //Recebendo as claims do token
+            Date dataExpiracao = claims.getExpiration(); //Recebendo a data de expiração do token
+            LocalDateTime data = dataExpiracao.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime(); //Convertendo a data de expiração do token que é do tipo date para localdatetime
+            return !LocalDateTime.now().isAfter(data);//Retornando se a hora atual não é maior que a hora de expiração do token o que significa que o token estaria expirado
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

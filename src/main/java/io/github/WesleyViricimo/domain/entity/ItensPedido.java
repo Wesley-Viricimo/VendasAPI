@@ -3,6 +3,7 @@ package io.github.WesleyViricimo.domain.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @NoArgsConstructor //Cria construtor sem os argumentos

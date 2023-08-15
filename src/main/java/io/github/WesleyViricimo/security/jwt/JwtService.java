@@ -1,14 +1,11 @@
 package io.github.WesleyViricimo.security.jwt;
 
-import io.github.WesleyViricimo.VendasApplication;
 import io.github.WesleyViricimo.domain.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;

@@ -17,14 +17,14 @@ import javax.validation.constraints.NotEmpty;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "LOGIN", length = 30, unique = true)
     @NotEmpty(message = "{campo.login.obrigatorio}")
     private String login;
 
-    @Column(name = "SENHA", length = 100)
+    @Column(name = "SENHA", length = 150)
     @NotEmpty(message = "{campo.senha.obrigatorio}")
     private String senha;
 

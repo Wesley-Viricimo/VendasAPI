@@ -18,7 +18,7 @@ import java.util.Set;
 public class Cliente {
 
     @Id //Define qual é a PK ou identificador da entidade e é obrigatória
-    @GeneratedValue(strategy = GenerationType.AUTO) //Indica que o campo será gerado automáticamente de forma incremental
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Indica que o campo será gerado automáticamente de forma incremental
     @Column(name = "ID")//Realiza configurações na coluna, altera tamanho, define um nome, define se é uma unique..
     private Integer id;
 

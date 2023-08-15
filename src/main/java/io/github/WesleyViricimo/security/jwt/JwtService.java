@@ -60,7 +60,7 @@ public class JwtService {
         return obterClaims(token).getSubject(); //getSubject retornará o usuário que está realizando o a requisição do token
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(VendasApplication.class);
         JwtService service = context.getBean(JwtService.class);
         Usuario usuario = Usuario.builder().login("wesley").build();
@@ -72,5 +72,6 @@ public class JwtService {
 
         System.out.println(service.obterLoginUsuario(token));
     }
+     */
 
 }
